@@ -1,0 +1,19 @@
+---
+version: "2.1"
+services:
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: code-server
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TIMEZONE}
+      - SUDO_PASSWORD=${SUDO_PASSWORD}
+      - DEFAULT_WORKSPACE=/vault
+    volumes:
+      - /linuxserver/code-server/appdata/config:/config
+      - ${VAULT_DIRECTORY}:/vault
+      - /extensions:/extensions
+    ports:
+      - ${PORT}:8443
+    restart: unless-stopped
